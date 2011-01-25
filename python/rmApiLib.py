@@ -19,20 +19,22 @@ The Service class defines all the URIs for the API
 """
 class Service:
     def __init__(self):
-        self.base = 'https://services.reachmail.net/'
-        self.user = 'https://services.reachmail.net/Rest/Administration/v1/users/current'
-        self.createList = 'https://services.reachmail.net/Rest/Contacts/v1/lists/'
-        self.getList = 'https://services.reachmail.net/Rest/Contacts/v1/lists/'
-        self.modifyList = 'https://services.reachmail.net/Rest/Contacts/v1/lists/'
-        self.deleteList = 'https://services.reachmail.net/Rest/Contacts/v1/lists/'
-        self.exportRecipients = 'https://services.reachmail.net/Rest/Contacts/v1/lists/'
-        self.getExportStatus = 'https://services.reachmail.net/Rest/Contacts/v1/lists/export/status/'
-        self.enumerateFields = 'https://services.reachmail.net/Rest/Contacts/v1/lists/fields/'
-        self.enumerateGroups = 'https://services.reachmail.net/Rest/Contacts/v1/lists/groups/'
-        self.uploadFile = 'https://services.reachmail.net/Rest/Data/'
-        self.listImport = 'https://services.reachmail.net/Rest/Contacts/v1/lists/import/'
-        self.getReadDetailReport = 'https://services.reachmail.net/Rest/Reports/v1/details/mailings/reads/'
-        self.enumerateMailingReports = 'https://services.reachmail.net/Rest/Reports/v1/mailings/query/'
+		self.base = 'https://services.reachmail.net/'
+		self.user = 'https://services.reachmail.net/Rest/Administration/v1/users/current'
+		self.createList = 'https://services.reachmail.net/Rest/Contacts/v1/lists/'
+		self.getList = 'https://services.reachmail.net/Rest/Contacts/v1/lists/'
+		self.modifyList = 'https://services.reachmail.net/Rest/Contacts/v1/lists/'
+		self.deleteList = 'https://services.reachmail.net/Rest/Contacts/v1/lists/'
+		self.exportRecipients = 'https://services.reachmail.net/Rest/Contacts/v1/lists/'
+		self.getExportStatus = 'https://services.reachmail.net/Rest/Contacts/v1/lists/export/status/'
+		self.enumerateFields = 'https://services.reachmail.net/Rest/Contacts/v1/lists/fields/'
+		self.enumerateGroups = 'https://services.reachmail.net/Rest/Contacts/v1/lists/groups/'
+		self.uploadFile = 'https://services.reachmail.net/Rest/Data/'
+		self.listImport = 'https://services.reachmail.net/Rest/Contacts/v1/lists/import/'
+		self.getReadDetailReport = 'https://services.reachmail.net/Rest/Reports/v1/details/mailings/reads/'
+		self.enumerateMailingReports = 'https://services.reachmail.net/Rest/Reports/v1/mailings/query/'
+		self.createMailing = 'https://services.reachmail.net/Rest/Content/Mailings/v1/'
+
 """
 The service_request function is the backbone of this library, it makes and
 receives requests of the various API services.
@@ -84,7 +86,6 @@ def get_current_user(key,uname,password):
     service_request(service.user,'GET','',accountLogin.apiUname,accountLogin.password)
     xmldoc = minidom.parse(response)
     accountId = xmldoc.getElementsByTagName('AccountId')[0].firstChild.nodeValue
-    #print "Authenticated successfully, account ID is %s" % accountId
     return accountId
 
 def enumerate_fields(accountId):
@@ -111,7 +112,6 @@ def create_list(accountId,listName,fields):
     service_request(service.createList+accountId,'POST',createListBody,accountLogin.apiUname,accountLogin.password)
     xmldoc = minidom.parse(response)
     listId = xmldoc.getElementsByTagName('Id')[0].firstChild.nodeValue
-    #print listId
     return listId
 
 def upload_file(fileName):
@@ -120,7 +120,6 @@ def upload_file(fileName):
     service_request(service.uploadFile,'POST',handle.read(),accountLogin.apiUname,accountLogin.password)
     xmldoc = minidom.parse(response)
     dataId = xmldoc.getElementsByTagName('Id')[0].firstChild.nodeValue
-    #print dataId
     return dataId
 
 def import_list(accountId,listId,fields,dataId,delimiter,sheetName='0'):
@@ -190,6 +189,21 @@ def enumerate_mailing_reports(accountId):
     mailingIds = xmldoc.documentElement.getElementsByTagName('MailingReport')
     for mailingId in mailingIds:
         print mailingId.getElementsByTagName('MailingId')[0].childNodes[0].nodeValue
+
+def create_mail(accountId,fromEmail,fromName,content,format,subject,replyToEmail,links):
+	requestBody = "<MailingProperties><FromEmail>%s</FromEmail>\
+<FromName>%s</FromName><TextContent>%s</TextContent>\
+<MailingFormat>%s</MailingFormat><Subject>%s</Subject>\
+<ReplyToEmail>%s</ReplyToEmail>" % (fromEmail,fromName,content,format,subject,replyToEmail) 
+	for link in links:
+		trackingBody = '<TrackedLink><Created>%s</Created>\
+<LinkMailingFormat>%s</LinkMailingFormat><Modified>%s</Modified>\
+<url>%s</url>' % (link['created'],link['linkMailingFormat'],link['modified'],link['url'])
+		requestBody += trackingBody+'</MailingProperties>'
+	service_request(service.createMailing+accountId,'POST',requestBody,accountLogin.username,accountLogin.password)
+	xmlDoc = minidom.parse(response)
+    mailId = xmldoc.getElementsByTagName('Id')[0].firstChild.nodeValue
+	return mailId
     
 service = Service()
 
