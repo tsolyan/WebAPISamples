@@ -1,5 +1,4 @@
 <?php
-
 $account_key = 'account-id';
 $username = 'username';
 $password = 'password';
@@ -11,47 +10,11 @@ $api_service_url = 'https://services.reachmail.net/Rest/Contacts/v1/lists/export
 $header = array("Content-Type: application/xml");
 $request_body = '<ExportParameters></ExportParameters>';
 
-$request_body =  '
-<ExportParameters>
-<ExportOptions>
-<Format>CharacterSeperated</Format>
-<HeaderRow>true</HeaderRow>
- <CharacterSeperatedData>
-<Delimiter>Comma</Delimiter>
- </CharacterSeperatedData>
-<FieldMapping>
-
-<FieldMapping>
- <DestinationFieldName>Email</DestinationFieldName>
-<SourceFieldName>Email</SourceFieldName>
- </FieldMapping>
-
-<FieldMapping>
-<DestinationFieldName>Name</DestinationFieldName>
- <SourceFieldName>FullName</SourceFieldName>
-</FieldMapping>
-
-<FieldMapping>
-<DestinationFieldName>OptOut</DestinationFieldName>
- <SourceFieldName>OptOut</SourceFieldName>
-</FieldMapping>
-
-<FieldMapping>
-<DestinationFieldName>Other</DestinationFieldName>
- <SourceFieldName>Other</SourceFieldName>
-</FieldMapping>
-
-<FieldMapping>
-<DestinationFieldName>AccountNumber</DestinationFieldName>
- <SourceFieldName>AccountNumber</SourceFieldName>
-</FieldMapping>
-
-</FieldMapping>
- </ExportOptions>
-</ExportParameters>
-';
-
-
+$request_body =  '<ExportParameters><ExportOptions><Format>CharacterSeperated</Format><HeaderRow>true</HeaderRow><CharacterSeperatedData><Delimiter>Comma</Delimiter></CharacterSeperatedData><FieldMapping><FieldMapping><DestinationFieldName>Email</DestinationFieldName><SourceFieldName>Email</SourceFieldName></FieldMapping><FieldMapping>
+<DestinationFieldName>Name</DestinationFieldName><SourceFieldName>FullName</SourceFieldName></FieldMapping><FieldMapping><DestinationFieldName>OptOut</DestinationFieldName><SourceFieldName>OptOut</SourceFieldName></FieldMapping><FieldMapping>
+<DestinationFieldName>Other</DestinationFieldName><SourceFieldName>Other</SourceFieldName></FieldMapping><FieldMapping>
+<DestinationFieldName>AccountNumber</DestinationFieldName><SourceFieldName>AccountNumber</SourceFieldName></FieldMapping>
+</FieldMapping></ExportOptions></ExportParameters>';
 
 //---- Intialize cURL, set options and make the request
 $account_id_request = curl_init();
@@ -68,7 +31,6 @@ $curl_options = array(
 curl_setopt_array($account_id_request, $curl_options);
 
 $response = curl_exec($account_id_request);
-
 
 preg_match("/id>(.*?)</i", $response, $matches);
 
