@@ -25,7 +25,7 @@ $header = array("Content-Type: application/xml");
 
 //---- While the request body can be set wiithin the cURL options array it's
 //---- easier to define long request bodies outside of the array.
-$request_body = "<ListProperties><Fields><FieldNames><Field>Email</Field><Field>FullName</Field></FieldNames></Fields><Name>API TEST LIST 20100601A</Name></ListProperties>"; 
+$request_body = "<ListProperties><Fields><FieldNames><Field>Email</Field><Field>FullName</Field></FieldNames></Fields><Name>API TEST LIST 20110101A</Name></ListProperties>"; 
 
 $create_list_request = curl_init();
 $curl_options = array(
