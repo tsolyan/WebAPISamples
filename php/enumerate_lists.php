@@ -23,7 +23,7 @@ $api_service_url = $api_service_url.$account_id;
 //---- The header variable will be used in the cURL options, the request body
 //---- is the body of the post that will be made to the API service URL
 $header = array("Content-Type: application/xml");
-$request_body = '<ListFilter></ListFilter>'; 
+$request_body = '<ListFilter><GreaterThan>1</GreaterThan><SmallerThan>5</SmallerThan></ListFilter>'; 
 
 //---- Intialize cURL, set options and make the request
 $enumerate_lists_request = curl_init();
