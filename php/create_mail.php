@@ -24,7 +24,7 @@ $api_service_url = $api_service_url.$account_id;
 $header = array("Content-Type: application/xml");
 
 //---- Here the request body is set. 
-$request_body = "<MailingProperties><FromEmail>news@yourdomain.com</FromEmail><FromName>Company X News</FromName><HtmlContent><![CDATA[<html><head><title>my mail</title><body><h1>Welcome to my Newsletter</h1><p>I made this email with the ReachMail API</p><p>Here's a <a href=\"http://reachmail.net\">link</a></p></body></html>]]></HtmlContent><MailingFormat>Html</MailingFormat><Name>API Demo Mail</Name><Subject>Company X Newsletter</Subject><ReplyToEmail>news@yourdomain.com</ReplyToEmail><TrackedLink><Created>2010-05-28</Created><LinkMailingFormat>Html</LinkMailingFormat><Modified>2010-05-28</Modified><Url>http://reachmail.net</Url></TrackedLink></MailingProperties>";
+$request_body = "<MailingProperties><FromEmail>news@yourdomain.com</FromEmail><FromName>Company X News</FromName><HtmlContent><![CDATA[<html><head><title>my mail</title><body><h1>Welcome to my Newsletter</h1><p>I made this email with the ReachMail API</p><p>Here's a <a href=\"http://reachmail.net\">link</a></p></body></html>]]></HtmlContent><MailingFormat>Html</MailingFormat><Name>API Demo Mail</Name><Subject>Company X Newsletter</Subject><ReplyToEmail>news@yourdomain.com</ReplyToEmail><TrackedLink><Created>2011-02-21</Created><LinkMailingFormat>Html</LinkMailingFormat><Modified>2011-02-22</Modified><Url>http://reachmail.net</Url></TrackedLink></MailingProperties>";
 
 $create_mail_request = curl_init();
 $curl_options = array(
