@@ -27,7 +27,7 @@ $api_service_url = $api_service_url.$account_id.'/'.$list_id;
 $header = array("Content-Type: application/xml");
 
 //---- Setting the date threshold
-$date = '2010-05-15';
+$date = '2011-01-25T12:00:00';
 
 //---- The request body contains the XML that will be posted to the API
 //---- service URL.
