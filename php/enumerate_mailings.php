@@ -23,7 +23,7 @@ $api_service_url = $api_service_url.$account_id;
 //---- The header variable will be used in the cURL options, the request body
 //---- is the body of the post that will be made to the API service URL
 $header = array("Content-Type: application/xml");
-$request_body = '<MailingFilter><NewerThan>2010-05-15</NewerThan></MailingFilter>'; 
+$request_body = '<MailingFilter><NewerThan>2011-01-25T12:00:00</NewerThan></MailingFilter>'; 
 
 //---- Intialize cURL, set options and make the request
 $enumerate_mailings_request = curl_init();
