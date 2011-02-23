@@ -29,7 +29,7 @@ $curl_options = array(
         CURLOPT_URL => $api_service_url,
         CURLOPT_HEADER => false,
         CURLOPT_USERPWD => "$account_key\\$username:$password",
-		CURLOPT_HTTPHEADER => $header,
+CURLOPT_HTTPHEADER => $header,
         CURLOPT_RETURNTRANSFER => true
         );
 curl_setopt_array($get_list_request, $curl_options);
